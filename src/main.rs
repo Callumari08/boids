@@ -8,7 +8,7 @@ fn main() {
     App::new()
     .insert_resource(ClearColor(Color::TEAL))
     .add_plugins((DefaultPlugins, ShapePlugin))
-    .add_systems(Startup, init)
+    .add_systems(Startup, (init, Boid::start))
     .add_systems(Update, Boid::update)
     .run();
 }

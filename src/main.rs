@@ -26,7 +26,7 @@ fn init(mut commands: Commands, /*mut meshes: ResMut<Assets<Mesh>>, mut material
     };
 
 
-    for _i in 0..40 
+    for _i in 0..499 
     {
         let transform: Transform = Transform::from_translation(Vec3::new(rand::thread_rng().gen_range(-Boid::BOUNDS.x-1.0..Boid::BOUNDS.x+1.0), 
             rand::thread_rng().gen_range(-Boid::BOUNDS.y+1.0..Boid::BOUNDS.y-1.0), rand::thread_rng().gen_range(-Boid::BOUNDS.z+1.0..Boid::BOUNDS.z-1.0)));
@@ -43,6 +43,7 @@ fn init(mut commands: Commands, /*mut meshes: ResMut<Assets<Mesh>>, mut material
 
                 if direction.x != 0.0 || direction.y != 0.0 /*|| direction.z == 0.0*/
                 {
+                    println!("{}", direction);
                     break;
                 }
             }
@@ -56,7 +57,7 @@ fn init(mut commands: Commands, /*mut meshes: ResMut<Assets<Mesh>>, mut material
             Fill::color(Color::WHITE),
             Stroke::new(Color::GRAY, 2.0),
     
-            Boid::new(Velocity { speed: SPEED, direction }),
+            Boid::new(Velocity { speed: SPEED, direction }, 5.0),
     
         ));
     }

@@ -1,9 +1,12 @@
+use std::thread::spawn;
+
 pub use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct Boid
 {
     pub velocity: Velocity,
+    pub view_radius: f32,
 }
 
 pub struct Velocity
@@ -20,17 +23,27 @@ pub struct Velocity
 
 impl Boid
 {
-    pub const BOUNDS: Vec3 = Vec3::new(500.0, 500.0, 500.0);
+    pub const BOUNDS: Vec3 = Vec3::new(650.0, 400.0, 500.0);
 
-    pub fn new(velocity: Velocity) -> Self
+    pub fn new(velocity: Velocity, view_radius: f32) -> Self
     {
-        Self { velocity} 
+        Self { velocity, view_radius } 
+    }
+
+    pub fn start(meshes: Res<Assets<Mesh>>, mut boid: Query<(&mut Boid, &mut Transform)> )
+    {
+        for (mut boid, mut transform) in boid.iter_mut()
+        {
+            
+        }
     }
 
     pub fn update(time:Res<Time>, mut boid: Query<(&mut Boid, &mut Transform /*&mut BoidOptions*/)> )
     {
         for (mut boid, mut transform) in boid.iter_mut()
         {
+            
+
             transform.translation += boid.velocity.direction * boid.velocity.speed * time.delta_seconds();
 
             Boid::check_bounds(&mut transform);

@@ -16,6 +16,7 @@ fn main() {
     .run();
 }
 
+
 const SPEED: f32 = 50.0;
 fn init(mut commands: Commands, /*mut meshes: ResMut<Assets<Mesh>>, mut materials: ResMut<Assets<ColorMaterial>>*/) -> ()
 {

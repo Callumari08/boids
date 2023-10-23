@@ -1,14 +1,17 @@
+pub mod boid;
+pub mod boid_view;
+
+use bevy::prelude::*;
 use bevy_prototype_lyon::prelude::*;
-// use bevy::sprite::MaterialMesh2dBundle;
 use rand::Rng;
 
-use boids::*;
+use boid::boid::*;
 
 fn main() {
     App::new()
     .insert_resource(ClearColor(Color::TEAL))
     .add_plugins((DefaultPlugins, ShapePlugin))
-    .add_systems(Startup, (init, Boid::start))
+    .add_systems(Startup, init)
     .add_systems(Update, Boid::update)
     .run();
 }
@@ -24,7 +27,6 @@ fn init(mut commands: Commands, /*mut meshes: ResMut<Assets<Mesh>>, mut material
         feature: shapes::RegularPolygonFeature::Radius(11.5),
         ..shapes::RegularPolygon::default()
     };
-
 
     for _i in 0..499 
     {
@@ -43,7 +45,6 @@ fn init(mut commands: Commands, /*mut meshes: ResMut<Assets<Mesh>>, mut material
 
                 if direction.x != 0.0 || direction.y != 0.0 /*|| direction.z == 0.0*/
                 {
-                    println!("{}", direction);
                     break;
                 }
             }
@@ -57,10 +58,8 @@ fn init(mut commands: Commands, /*mut meshes: ResMut<Assets<Mesh>>, mut material
             Fill::color(Color::WHITE),
             Stroke::new(Color::GRAY, 2.0),
     
-            Boid::new(Velocity { speed: SPEED, direction }, 5.0),
+            Boid::new(Velocity { speed: SPEED, direction, }, 5.0),
     
         ));
     }
 }
-
-mod boids;

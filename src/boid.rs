@@ -1,6 +1,6 @@
 pub mod boid
 {
-    use bevy::{prelude::*, sprite::MaterialMesh2dBundle};
+    use bevy::{prelude::*, render::render_resource::encase::vector};
 
     #[derive(Component)]
     pub struct Boid
@@ -22,6 +22,7 @@ pub mod boid
     {
     check_bounds: bool, 
     }*/
+    
 
     impl Boid
     {
@@ -32,49 +33,26 @@ pub mod boid
             Self { velocity, view_radius, has_view: false } 
         }
 
-        /*pub fn start(mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, mut materials: ResMut<Assets<ColorMaterial>>,mut boid: Query<(&mut Boid, &mut Transform)> )
+        pub fn update(time:Res<Time>, mut query: Query<(&mut Boid, &mut Transform /*BoidOptions*/)> )
         {
-            println!("No Loop");
-            for (mut boid, transform) in boid.iter_mut()
+            for (boid, mut transform) in query.iter_mut()
             {
-                println!("Loop");
-                // View Circle/Radius
-                commands.spawn(MaterialMesh2dBundle {
-                    mesh: meshes.add(shape::Circle::new(5.0).into()).into(),
-                    material: materials.add(ColorMaterial::from(Color::PURPLE)),
-                    transform: *transform,
-                    ..default()
-                });
-            }
-        }*/
 
-        pub fn update(time:Res<Time>, mut commands: Commands, mut meshes: ResMut<Assets<Mesh>>, 
-            mut materials: ResMut<Assets<ColorMaterial>>,  
-            mut boid: Query<(&mut Boid, &mut Transform /*BoidOptions*/)> )
-        {
-            for (mut boid, mut transform) in boid.iter_mut()
-            {
-            if !boid.has_view
-            {
-                    commands.spawn(MaterialMesh2dBundle {
-                        mesh: meshes.add(shape::Circle::new(5.0).into()).into(),
-                        material: materials.add(ColorMaterial::from(Color::PURPLE)),
-                        transform: *transform,
-                        ..default()
-                    });
-
-                    boid.has_view = true;
-            } 
 
                 transform.translation += boid.velocity.direction * boid.velocity.speed * time.delta_seconds();
 
-                Boid::check_bounds(&mut transform);
+                Boid::check_bounds(&mut transform); 
             }
         }
 
+        fn find_visible_boids<'a>() -> Vec<&'a mut Boid>
+        {
+            return Vec::new();
+        }
 
         fn check_bounds(transform: &mut Transform)
         { 
+            // Stupid But Fast
             match (transform.translation.x, transform.translation.y, transform.translation.z) 
             {
                 (x, _y, _z) if x >= Boid::BOUNDS.x => 

@@ -1,5 +1,4 @@
 pub mod boid;
-pub mod boid_view;
 
 use bevy::prelude::*;
 use bevy_prototype_lyon::prelude::*;
@@ -59,8 +58,9 @@ fn init(mut commands: Commands, /*mut meshes: ResMut<Assets<Mesh>>, mut material
             Fill::color(Color::WHITE),
             Stroke::new(Color::GRAY, 2.0),
     
-            Boid::new(Velocity { speed: SPEED, direction, }, 5.0),
-    
+            Boid::new(Velocity { speed: SPEED, direction, }, 5.0), 
+
         ));
+
     }
 }
